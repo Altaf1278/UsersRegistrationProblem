@@ -4,57 +4,72 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class UserRegistrationProblem {
 
-	public static boolean isvalidfirstName(String firstName) {
-		String regex = "^[A-Z][A-Za-z]{3,}";
-		Pattern pattern = Pattern.compile(regex);
-		if (firstName == null) {
-			return false;
+	private String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+	private Pattern pattern = Pattern.compile(regex);
+
+	public void validateFirstName(String firstName) throws InvalidFirstNameException {
+		if (firstName.isEmpty()) {
+			throw new InvalidFirstNameException("Invalid first name");
 		}
-		Matcher matcher = pattern.matcher(firstName);
-		return matcher.matches();
-	}
-	
-	public static boolean isvalidlastName(String lastName) {
-		String regex = "^[A-Z][A-Za-z]{3,}";
-		Pattern pattern = Pattern.compile(regex);
-		if (lastName == null) {
-			return false;
-		}
-		Matcher matcher = pattern.matcher(lastName);
-		return matcher.matches();
 	}
 
-	public static boolean isvalidEmail(String Email) {
-		String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-		Pattern pattern = Pattern.compile(regex);
-		if (Email == null) {
-			return false;
+	public void validateLastName(String lastName) throws InvalidLastNameException {
+		if (lastName.isEmpty()) {
+			throw new InvalidLastNameException("Invalid last name");
 		}
-		Matcher matcher = pattern.matcher(Email);
-		return matcher.matches();
-
 	}
 
-	public static boolean isvalidMobileNumber(String mobileNumber) {
-		String regex = "^[1-9][0-9]\\s[1-9][0-9]{9}";
-		Pattern pattern = Pattern.compile(regex);
-		if (mobileNumber == null) {
-			return false;
+	public void validateEmail(String email) throws InvalidEmailException {
+		Matcher matcher = pattern.matcher(email);
+		if (!matcher.matches()) {
+			throw new InvalidEmailException("Invalid email");
 		}
-		Matcher matcher = pattern.matcher(mobileNumber);
-		return matcher.matches();
-
 	}
-	
-	public static boolean isvalidPassword(String password) {
-		String regex = "^.{8,}$";
-		Pattern pattern = Pattern.compile(regex);
-		if (password == null) {
-			return false;
+
+	public void validateMobile(String mobile) throws InvalidMobileException {
+		if (mobile.length() != 10) {
+			throw new InvalidMobileException("Invalid mobile");
 		}
-		Matcher matcher = pattern.matcher(password);
-		return matcher.matches();
+	}
+
+	public void validatePassword(String password) throws InvalidPasswordException {
+		if (password.length() < 8) {
+			throw new InvalidPasswordException("Invalid password");
+		}
+	}
+}
+
+class InvalidFirstNameException extends Exception {
+	public InvalidFirstNameException(String message) {
+		super(message);
+	}
+}
+
+class InvalidLastNameException extends Exception {
+	public InvalidLastNameException(String message) {
+		super(message);
+	}
+}
+
+class InvalidEmailException extends Exception {
+	public InvalidEmailException(String message) {
+		super(message);
+	}
+}
+
+class InvalidMobileException extends Exception {
+	public InvalidMobileException(String message) {
+		super(message);
+	}
+}
+
+class InvalidPasswordException extends Exception {
+	public InvalidPasswordException(String message) {
+		super(message);
 	}
 }
