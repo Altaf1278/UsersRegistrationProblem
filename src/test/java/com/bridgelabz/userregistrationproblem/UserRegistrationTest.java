@@ -63,7 +63,7 @@ public class UserRegistrationTest {
 
 	@Test
 	public void testInvalidEmail() {
-		String email = "altaf@example";
+		String email = "altaf@. com.my";
 		try {
 			validateEmail(email);
 		} catch (InvalidEmailException e) {
